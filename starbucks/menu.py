@@ -23,19 +23,21 @@ headers = {
     "x-requested-with": "XMLHttpRequest"
 }
 
-def get_all_menu():
+def get_all_menu(store_number=None):
     """
     Get the full Starbucks menu.
 
     Returns:
     dict: The response data from the API.
     """
-
+    params = {
+        "storeNumber": store_number
+    }
     removable_keys = ["displayOrder", "uri", "id"]
     # use os path join to join the base_url and the endpoint
     endpoint = "ordering/menu"
     url = os.path.join(base_url, endpoint)
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, params=params)
     data = response.json()
     # remove the keys that are not needed
     remove_keys_recursively(data, removable_keys)
