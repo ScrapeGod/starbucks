@@ -42,7 +42,7 @@ def get_stores(lat=None, lng=None, place=None):
         "lng": lng,
         "place": place
     }
-    url = os.path.join(base_url, end_point)
+    url = '/'.join([base_url, end_point])
     response = requests.get(url, headers=headers, params=params)
     data = response.json()
     return data
@@ -64,7 +64,7 @@ def get_store_by_number(store_number):
         }
     }
     removable_keys = ['id']
-    url = os.path.join(base_url, end_point)
+    url = '/'.join([base_url, end_point])
     response = requests.post(url, headers=headers, json=data)
     data = response.json()
     remove_keys_recursively(data, removable_keys)

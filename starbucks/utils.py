@@ -38,7 +38,7 @@ def search_for_key_value_recursively(data, key, value):
     """
     if isinstance(data, dict):
         # Check if the current dictionary contains the key-value pair
-        if key in data and data[key] == value:
+        if key in data and int(data[key]) == int(value):
             return data
         # Recursively search the values of the dictionary
         for sub_data in data.values():
@@ -67,7 +67,6 @@ def get_product_uri_from_product_number(product_number):
     # read json file
     with open('data/starbucks_menu.json') as f:
         data = json.load(f)
-        
     product = search_for_key_value_recursively(data, "productNumber", product_number)
     if product is not None:
         return product["uri"]
