@@ -19,7 +19,7 @@ headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
 }
 
-def get_all_menu(store_number=None):
+def get_all_menu(store_number=None, remove_keys=True):
     """
     Get the full Starbucks menu.
 
@@ -36,10 +36,11 @@ def get_all_menu(store_number=None):
     response = requests.get(url, headers=headers, params=params)
     data = response.json()
     # remove the keys that are not needed
-    remove_keys_recursively(data, removable_keys)
+    if remove_keys:
+        remove_keys_recursively(data, removable_keys)
     return data
 
-def get_product_details(product_number, store_number=None):
+def get_product_details(product_number, store_number=None, data=None):
     """
     Get the details of a specific product by its product number.
 
@@ -49,8 +50,9 @@ def get_product_details(product_number, store_number=None):
     Returns:
     dict: The response data from the API.
     """
-
-    product_uri = get_product_uri_from_product_number(product_number)
+    if data is None:
+        data = get_all_menu(store_number, remove_keys=False)
+    product_uri = get_product_uri_from_product_number(data, product_number)
     if product_uri:
         product_uri = product_uri.replace("/product", "ordering")
     url = '/'.join([base_url, product_uri])

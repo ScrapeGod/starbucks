@@ -55,7 +55,7 @@ def search_for_key_value_recursively(data, key, value):
                 return result
     return None
 
-def get_product_uri_from_product_number(product_number):
+def get_product_uri_from_product_number(data, product_number):
     """
     Get the URI of a specific product by its product number.
 
@@ -67,10 +67,6 @@ def get_product_uri_from_product_number(product_number):
     """
     # use os path join to join the base_url and the endpoint
     # read json file
-    menu_path = pkg_resources.resource_filename(__name__, '../data/starbucks_menu.json')
-    print(menu_path)
-    with open(menu_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
     product = search_for_key_value_recursively(data, "productNumber", product_number)
     if product is not None:
         return product["uri"]
