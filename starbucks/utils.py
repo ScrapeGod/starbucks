@@ -1,4 +1,6 @@
 import json
+import pkg_resources
+
 def remove_keys_recursively(data, keys_to_remove):
     """
     Removes all keys in `keys_to_remove` from a nested dictionary or list of dictionaries.
@@ -63,9 +65,11 @@ def get_product_uri_from_product_number(product_number):
     Returns:
     str: The URI of the product.
     """
-        # use os path join to join the base_url and the endpoint
+    # use os path join to join the base_url and the endpoint
     # read json file
-    with open('data/starbucks_menu.json') as f:
+    menu_path = pkg_resources.resource_filename(__name__, '../data/starbucks_menu.json')
+    print(menu_path)
+    with open(menu_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     product = search_for_key_value_recursively(data, "productNumber", product_number)
     if product is not None:

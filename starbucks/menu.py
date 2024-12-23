@@ -54,7 +54,6 @@ def get_product_details(product_number, store_number=None):
     if product_uri:
         product_uri = product_uri.replace("/product", "ordering")
     url = '/'.join([base_url, product_uri])
-    print(url)
     params = {
         "storeNumber": store_number
     }
